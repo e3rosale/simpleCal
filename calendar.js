@@ -13,26 +13,22 @@ var CALENDAR = function () {
 	    } 
  
 	    function switchMonth(next, month, year) { 
-        var curr = label.text().trim().split(" "), calendar, tempYear =  parseInt(curr[1], 10); 
-	      
-        month = month || ((next) ? ( (curr[0] === "December") ? 0 : months.indexOf(curr[0]) + 1 ) : ( (curr[0] === "January") ? 11 : months.indexOf(curr[0]) - 1 )); 
-	    year = year || ((next && month === 0) ? tempYear + 1 : (!next && month === 11));
+          var curr = label.text().trim().split(" "), calendar, tempYear =  parseInt(curr[1], 10); 
+          _month = month || ((next) ? ( (curr[0] === "December") ? 0 : months.indexOf(curr[0]) + 1 ) : ( (curr[0] === "January") ? 11 : months.indexOf(curr[0]) - 1 )); 
+          _year = year || ((next && _month === 0) ? tempYear + 1 : (!next && _month === 11) ? tempYear - 1 : tempYear);
+          label.text(months[_month] + " " + _year);
+
+          calendar = createCal(_year, _month);
         
-        
-   /*      console.profile("createCal"); */
-        // calendar = createCal(year, month);
-        calendar = createCal(2010, 9);
-       /*  console.profileEnd('createCal');
-        
-        $("cal-frame", wrap)
-          .find(".curr")
-            .removeClass("curr")
-            .addClass("temp")
-          .end()
-          .prepend(calendar.calendar())
-          .find("temp")
-            .fadeOut("slow", function () { $(this).remove(); });
-        label.text(calendar.label); */
+        // $("cal-frame", wrap)
+        //   .find(".curr")
+        //     .removeClass("curr")
+        //     .addClass("temp")
+        //   .end()
+        //   .prepend(calendar.calendar())
+        //   .find("temp")
+        //     .fadeOut("slow", function () { $(this).remove(); });
+        // label.text(calendar.label); 
        } 
       
       
@@ -85,11 +81,11 @@ var CALENDAR = function () {
         console.dir(calendar);
       }
       
-	    createCal.cache = {}; 
-	    return { 
-	        init : init, 
-	        switchMonth : switchMonth, 
-	        createCal   : createCal 
-	    }; 
+	  createCal.cache = {}; 
+	  return { 
+	    init : init, 
+	    switchMonth : switchMonth, 
+	    createCal   : createCal 
+	  }; 
 	};
   
